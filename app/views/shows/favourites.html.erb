@@ -1,0 +1,48 @@
+
+<a href="<%= root_path %>" class="previous round">&#8249; Shows</a>
+
+<div class="container py-5">
+
+  <!-- For demo purpose -->
+  <div class="row text-center text-white mb-5">
+    <div class="col-lg-7 mx-auto">
+      <h1 class="display-4">Favourites</h1>
+    </div>
+  </div>
+  <!-- End -->
+
+  <div class="row">
+    <div class="col-lg-8 mx-auto">
+
+      <!-- List group-->
+      <ul class="list-group shadow">
+
+        <!-- list group item-->
+        <%  @favourites.each do |item| %>
+        <li class="list-group-item">
+          <!-- Custom content-->
+          <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+            <div class="media-body order-2 order-lg-1">
+              <h5 class="mt-0 font-weight-bold mb-2"><%= item.show.name %></h5>
+              <p class="font-italic text-muted mb-0 small">On <%= item.show.channel.name %></p>
+              <div class="d-flex align-items-center justify-content-between mt-1">
+                <h6 class="font-weight-bold my-2"><%= item.show.startTime.strftime("%d") %>  <%=  item.show.startTime.strftime("%B") %> <%=  item.show.startTime.strftime("%Y") %></h6>
+              </div>
+               <div class="time">
+	                <h6><%=  item.show.startTime.strftime("%I:%M %P") %> - 
+	                <%=  item.show.endTime.strftime("%I:%M %P") %>
+	                <%= ((item.show.endTime - item.show.startTime)/60 ).to_i %> minutes</h6>
+	            </div>
+            </div><img src="<%= item.show.logo %>" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+          </div>
+          <!-- End -->
+          <%= link_to '&#10006;'.html_safe,"favourites/#{item.id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'remove-favourite' %> <a href="" class="remove-favourite"></a> 
+        </li>
+        <% end %>
+        <!-- End -->
+
+      </ul>
+      <!-- End -->
+    </div>
+  </div>
+</div>

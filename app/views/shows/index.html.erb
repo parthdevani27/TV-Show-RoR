@@ -1,0 +1,138 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Shows</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <% if user_signed_in? %>
+        <!-- # Logged in as <strong><%= current_user.email %></strong>. -->      
+      <li class="nav-item">
+          <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> ||
+      </li>
+      <li class="nav-item">
+         <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link' %> ||
+      </li>
+      <li class="nav-item">
+          <%= link_to 'Favourite', "/favourites", :class => 'navbar-link' %> 
+      </li>
+      <% else %>
+      <li class="nav-item">
+        <a class="nav-link" href="<%= new_user_registration_path %>">Sign up</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<%= new_user_session_path %>">Login</a>
+      </li>
+      <% end %>
+
+    </ul>
+    <%= form_with url: "/shows/search", local: true,method: :get do |form| %>
+      <div class="container">
+      <div class="row">
+        <div class="col-sm-8">
+            <input class="form-control mr-s/m-2" type="search" name="string" placeholder="Search" aria-label="Search">
+        </div>
+        <div class="col-sm-2        ">
+            <button type="submit" class="btn btn-primary primary-btn">search </button>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</nav>
+
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<div class="event-schedule-area-two bg-color pad100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title text-center">
+                    <div class="title-text">
+                      <p class="navbar-text float-right">
+                      </p>
+                        <!-- <h2>shows</h2> -->
+                    </div>
+                </div>
+            </div>
+            <!-- /.col end-->
+        </div>
+        <!-- row end-->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade active show" id="home" role="tabpanel">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" scope="col">Date</th>
+                                        <th scope="col">Logo</th>
+                                        <th scope="col">Show</th>
+                                        <th scope="col">Channel</th>
+                                        <th class="text-center" scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                  <% @shows.each do |item| %>
+
+
+                                    <tr class="inner-box">
+                                        <th scope="row">
+                                            <div class="event-date">
+                                                <span><%= item.startTime.strftime("%d") %></span>
+                                                <p><%=  item.startTime.strftime("%B") %></p>
+                                            </div>
+                                        </th>
+                                        <td>
+                                            <div class="event-img">
+                                                <img src="<%= item.logo %>" alt="" />
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="event-wrap">
+                                                <h3><%= item.name %></h3>
+                                                <div class="meta">
+                                                    Only in <span><%= item.channel.name %></span>
+                                                    <div class="time">
+                                                        <span><%=  item.startTime.strftime("%I:%M %P") %> - </span>
+                                                        <span><%=  item.endTime.strftime("%I:%M %P") %></span>,
+                                                        <span><%= (item.endTime - item.startTime)/60  %> minutes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="r-no">
+                                              <img class="channel-logo" src="<%= item.channel.logo.url(:thumb) %>" alt="" /><br>
+                                                <span><%= item.channel.name %></span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="primary-btn favourite-button">
+
+                                                <% if @favourites.map(&:show_id).include? item.id  %>
+                                                <%= link_to 'remove from favourite',"favourites/#{item.id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'remove-favourite' %> 
+                                                <% else %>
+                                                  <a class="btn btn-primary" href="/favourites/<%= item.id %>">Add to favourite</a>
+                                                <% end %>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <% end %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="primary-btn text-center">
+                </div>
+            </div>
+            <!-- /col end-->
+        </div>
+        <!-- /row end-->
+    </div>
+</div>
+
