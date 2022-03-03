@@ -1,0 +1,4 @@
+  fav_mailer_job:
+  cron: "5 7 * * *"
+  class: "FavMailerJob"
+  queue: default

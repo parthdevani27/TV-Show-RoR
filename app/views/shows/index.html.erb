@@ -31,7 +31,7 @@
       <div class="container">
       <div class="row">
         <div class="col-sm-8">
-            <input class="form-control mr-s/m-2" type="search" name="string" placeholder="Search" aria-label="Search">
+            <input class="form-control mr-s/m-2" type="search" name="string" placeholder="Search" aria-label="Search"  <% if @search %> value=<%= @search %> <% end %>>
         </div>
         <div class="col-sm-2        ">
             <button type="submit" class="btn btn-primary primary-btn">search </button>
@@ -96,9 +96,20 @@
                                                 <div class="meta">
                                                     Only in <span><%= item.channel.name %></span>
                                                     <div class="time">
-                                                        <span><%=  item.startTime.strftime("%I:%M %P") %> - </span>
-                                                        <span><%=  item.endTime.strftime("%I:%M %P") %></span>,
-                                                        <span><%= (item.endTime - item.startTime)/60  %> minutes</span>
+                                                        <% @s = (item.endTime.strftime("%d")).to_i  - (item.startTime.strftime("%d")).to_i %>
+                                                        <% if @s != 0 %>
+                                                            <span><%= item.startTime.strftime("%d") %> <%= item.startTime.strftime("%B")  %> <%= item.startTime.strftime("%I:%M %P") %> - </span>
+                                                            <span><%= item.endTime.strftime("%d")%>  <%= item.endTime.strftime("%B")%>  <%=  item.endTime.strftime("%I:%M %P") %></span>,<br>
+                                                        <% else %>
+                                                            <span><%=  item.startTime.strftime("%I:%M %P") %> - </span>
+                                                            <span><%=  item.endTime.strftime("%I:%M %P") %></span>,
+                                                        <% end %>
+                                                        <% @a=  ((item.endTime - item.startTime)/3600).round().to_i %>
+                                                          <% if @a != 0 %>
+                                                                    <span><%= @a %> Hours</span>
+                                                           <% else %>
+                                                                <span><%= ((item.endTime - item.startTime)/60).round().to_i%> Minutes</span>
+                                                           <% end %>
                                                     </div>
                                                 </div>
                                             </div>
@@ -110,10 +121,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="primary-btn favourite-button">
-
-                                                <% if @favourites.map(&:show_id).include? item.id  %>
-                                                <%= link_to 'remove from favourite',"favourites/#{item.id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'remove-favourite' %> 
+                                            <div class="primary-btn favourite-button link-style">
+                                                  <% @inFavourites = @favourites.select {|i| i.show_id == item.id} %>
+                                                <% if !@inFavourites.empty?  %>
+                                                <%= link_to 'remove from favourite',"favourites/#{@inFavourites[0].id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'btn btn-primary' %> 
                                                 <% else %>
                                                   <a class="btn btn-primary" href="/favourites/<%= item.id %>">Add to favourite</a>
                                                 <% end %>

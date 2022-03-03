@@ -26,6 +26,9 @@ body{margin-top:20px;}
     float: right;
     margin: -155px -5px 0 0;
 }
+.link-style > a:visited ,.link-style > a:link{
+    color: #fff;
+}
 a:link {
   text-decoration: none;
 }

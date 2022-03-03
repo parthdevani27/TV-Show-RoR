@@ -1,12 +1,13 @@
 class ShowsController < ApplicationController
   before_action :login_user_id
   def index
-      @shows = Show.all
+      @shows = Show.all.order("created_at DESC")
       @favourites = Favourite.where(user_id:  @user.id)
   end
 
   def search 
-      @shows = Show.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{params[:string].downcase}%", "%#{params[:string].downcase}%")
+      @search = params[:string]
+      @shows = Show.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{@search.downcase}%", "%#{@search.downcase}%")
       @favourites = Favourite.where(user_id:  @user.id)
       render "index"
   end
@@ -23,13 +24,14 @@ class ShowsController < ApplicationController
       @favourite = Favourite.new(show_id: params[:id],user_id:  @user.id)
       @favourite.save
       redirect_to root_path,notice:"#{@favourite.show.name} is added to favourites"
+      ShowMailer.fav_show_email(@user,@favourite.show).deliver
     end
   end
 
   def remove_favourites
      @favourite = Favourite.find(params[:id])
      @favourite.destroy
-     redirect_to action: "favourites",notice:"#{@favourite.show.name} is removed from favourites"
+     redirect_back fallback_location: root_path,notice:"#{@favourite.show.name} is removed from favourites"
   end
 
 

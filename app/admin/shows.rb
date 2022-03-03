@@ -32,11 +32,13 @@ ActiveAdmin.register Show do
 
   form do |f|
     f.inputs do
+      # f.semantic_errors *f.object.errors.keys
       f.input :name  
       f.input :channel
       f.input :logo
       f.input :startTime, as: :datetime_picker
-      f.input :endTime, as: :datetime_picker
+      f.input :endTime, as: :datetime_picker 
+      # f.time_select :endTime
       f.input :description
     end
     f.actions

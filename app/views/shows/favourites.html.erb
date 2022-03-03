@@ -29,9 +29,21 @@
                 <h6 class="font-weight-bold my-2"><%= item.show.startTime.strftime("%d") %>  <%=  item.show.startTime.strftime("%B") %> <%=  item.show.startTime.strftime("%Y") %></h6>
               </div>
                <div class="time">
-	                <h6><%=  item.show.startTime.strftime("%I:%M %P") %> - 
-	                <%=  item.show.endTime.strftime("%I:%M %P") %>
-	                <%= ((item.show.endTime - item.show.startTime)/60 ).to_i %> minutes</h6>
+	                <h6>
+                  <% @s = (item.show.endTime.strftime("%d")).to_i  - (item.show.startTime.strftime("%d")).to_i %>
+                  <% if @s != 0 %>
+                      <span><%= item.show.startTime.strftime("%d") %> <%= item.show.startTime.strftime("%B")  %> <%= item.show.startTime.strftime("%I:%M %P") %> - </span>
+                      <span><%= item.show.endTime.strftime("%d")%>  <%= item.show.endTime.strftime("%B")%>  <%=  item.show.endTime.strftime("%I:%M %P") %></span>,<br>
+                  <% else %>
+                      <span><%=  item.show.startTime.strftime("%I:%M %P") %> - </span>
+                      <span><%=  item.show.endTime.strftime("%I:%M %P") %></span>,
+                  <% end %>
+	                <% @a=  ((item.show.endTime - item.show.startTime)/3600).round().to_i %>
+                  <% if @a != 0 %>
+                            <span><%= @a %> Hours</span>
+                   <% else %>
+                        <span><%= ((item.show.endTime - item.show.startTime)/60).round().to_i%> Minutes</span>
+                   <% end %></h6>
 	            </div>
             </div><img src="<%= item.show.logo %>" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
           </div>
