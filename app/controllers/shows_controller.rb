@@ -1,13 +1,13 @@
 class ShowsController < ApplicationController
   before_action :login_user_id
   def index
-      @shows = Show.all.order("created_at DESC")
+      @shows = Show.all.paginate(:page => params[:page], :per_page => 3).order("created_at DESC")
       @favourites = Favourite.where(user_id:  @user.id)
   end
 
   def search 
       @search = params[:string]
-      @shows = Show.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{@search.downcase}%", "%#{@search.downcase}%")
+      @shows = Show.where("lower(name) LIKE ? OR lower(description) LIKE ?", "%#{@search.downcase}%", "%#{@search.downcase}%").paginate(:page => params[:page], :per_page => 3)
       @favourites = Favourite.where(user_id:  @user.id)
       render "index"
   end
@@ -17,6 +17,14 @@ class ShowsController < ApplicationController
   end
 
   def add_favourite
+    # @show = Show.find(params[:id])
+    # if @show.favorited_by?(@user)
+    #   @user.favorite(@show)
+    #   redirect_to root_path,notice:"#{@show.name} is added to favourites"
+    # else
+    #   redirect_to root_path,notice:"#{@show.name} is already in favourites"
+    # end
+
     @oldFavourite = Favourite.where(show_id: params[:id],user_id:  @user.id).first
     if @oldFavourite 
       redirect_to root_path,notice:"#{@oldFavourite.show.name} is already in favourites"
@@ -24,7 +32,6 @@ class ShowsController < ApplicationController
       @favourite = Favourite.new(show_id: params[:id],user_id:  @user.id)
       @favourite.save
       redirect_to root_path,notice:"#{@favourite.show.name} is added to favourites"
-      ShowMailer.fav_show_email(@user,@favourite.show).deliver
     end
   end
 

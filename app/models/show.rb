@@ -1,7 +1,9 @@
 class Show < ApplicationRecord
 	mount_uploader:logo, ImageUploader
 	belongs_to :channel, class_name: "Channel"
+	has_many :favourites
 	validate :date_validation
+	 acts_as_favoritable
 
 	  private def date_validation
 	    if (Time.zone.now.to_date - self.startTime.to_date).to_i > 0

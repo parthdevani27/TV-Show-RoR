@@ -27,10 +27,10 @@ gem 'activeadmin'
 gem 'carrierwave'
 gem 'mini_magick'
 gem 'active_admin_datetimepicker'
-
-gem 'redis'
 gem 'sidekiq'
-gem 'sidekiq-cron'
+gem 'sidekiq-cron', git: "https://github.com/citusdata/sidekiq-cron", branch: "hotfix/pipelining_depreciation"
+gem 'will_paginate'
+gem 'acts_as_favoritor'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

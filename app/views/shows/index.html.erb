@@ -135,6 +135,13 @@
                                     <% end %>
                                 </tbody>
                             </table>
+                            <div class="row margin-twenty5-zero margin-b-zero pagination-row">
+                                <div class="col-lg-8 col-md-8 col-sm-7 col-xs-6 padding-zero">
+                                    <ul class="pagination">
+                                        <li class="disabled"> <%= will_paginate(@shows,:previous_label => "&laquo;", :next_label => "&raquo;",:class=>"small-font",:outer_window => 1,:inner_window => 0) %></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
