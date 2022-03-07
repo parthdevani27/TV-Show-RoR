@@ -123,8 +123,8 @@
                                         <td>
                                             <div class="primary-btn favourite-button link-style">
                                                   <% @inFavourites = @favourites.select {|i| i.show_id == item.id} %>
-                                                <% if !@inFavourites.empty?  %>
-                                                <%= link_to 'remove from favourite',"favourites/#{@inFavourites[0].id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'btn btn-primary' %> 
+                                                  <% if @user.favorited?(item) %>
+                                                <%= link_to 'remove from favourite',"favourites/#{item.id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'btn btn-primary' %> 
                                                 <% else %>
                                                   <a class="btn btn-primary" href="/favourites/<%= item.id %>">Add to favourite</a>
                                                 <% end %>

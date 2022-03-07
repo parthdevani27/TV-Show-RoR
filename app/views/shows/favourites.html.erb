@@ -23,29 +23,29 @@
           <!-- Custom content-->
           <div class="media align-items-lg-center flex-column flex-lg-row p-3">
             <div class="media-body order-2 order-lg-1">
-              <h5 class="mt-0 font-weight-bold mb-2"><%= item.show.name %></h5>
-              <p class="font-italic text-muted mb-0 small">On <%= item.show.channel.name %></p>
+              <h5 class="mt-0 font-weight-bold mb-2"><%= item.name %></h5>
+              <p class="font-italic text-muted mb-0 small">On <%= item.channel.name %></p>
               <div class="d-flex align-items-center justify-content-between mt-1">
-                <h6 class="font-weight-bold my-2"><%= item.show.startTime.strftime("%d") %>  <%=  item.show.startTime.strftime("%B") %> <%=  item.show.startTime.strftime("%Y") %></h6>
+                <h6 class="font-weight-bold my-2"><%= item.startTime.strftime("%d") %>  <%=  item.startTime.strftime("%B") %> <%=  item.startTime.strftime("%Y") %></h6>
               </div>
                <div class="time">
 	                <h6>
-                  <% @s = (item.show.endTime.strftime("%d")).to_i  - (item.show.startTime.strftime("%d")).to_i %>
+                  <% @s = (item.endTime.strftime("%d")).to_i  - (item.startTime.strftime("%d")).to_i %>
                   <% if @s != 0 %>
-                      <span><%= item.show.startTime.strftime("%d") %> <%= item.show.startTime.strftime("%B")  %> <%= item.show.startTime.strftime("%I:%M %P") %> - </span>
-                      <span><%= item.show.endTime.strftime("%d")%>  <%= item.show.endTime.strftime("%B")%>  <%=  item.show.endTime.strftime("%I:%M %P") %></span>,<br>
+                      <span><%= item.startTime.strftime("%d") %> <%= item.startTime.strftime("%B")  %> <%= item.startTime.strftime("%I:%M %P") %> - </span>
+                      <span><%= item.endTime.strftime("%d")%>  <%= item.endTime.strftime("%B")%>  <%=  item.endTime.strftime("%I:%M %P") %></span>,<br>
                   <% else %>
-                      <span><%=  item.show.startTime.strftime("%I:%M %P") %> - </span>
-                      <span><%=  item.show.endTime.strftime("%I:%M %P") %></span>,
+                      <span><%=  item.startTime.strftime("%I:%M %P") %> - </span>
+                      <span><%=  item.endTime.strftime("%I:%M %P") %></span>,
                   <% end %>
-	                <% @a=  ((item.show.endTime - item.show.startTime)/3600).round().to_i %>
+	                <% @a=  ((item.endTime - item.startTime)/3600).round().to_i %>
                   <% if @a != 0 %>
                             <span><%= @a %> Hours</span>
                    <% else %>
-                        <span><%= ((item.show.endTime - item.show.startTime)/60).round().to_i%> Minutes</span>
+                        <span><%= ((item.endTime - item.startTime)/60).round().to_i%> Minutes</span>
                    <% end %></h6>
 	            </div>
-            </div><img src="<%= item.show.logo %>" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
+            </div><img src="<%= item.logo %>" alt="Generic placeholder image" width="200" class="ml-lg-5 order-1 order-lg-2">
           </div>
           <!-- End -->
           <%= link_to '&#10006;'.html_safe,"favourites/#{item.id}",method: :delete,data: {confirm: 'Are You Sure?'}, class: 'remove-favourite' %> <a href="" class="remove-favourite"></a> 
