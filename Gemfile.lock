@@ -262,6 +262,8 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq-batch (0.1.7)
+      sidekiq (>= 3)
     spring (2.1.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -329,6 +331,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   sidekiq
+  sidekiq-batch
   sidekiq-cron!
   spring
   spring-watcher-listen (~> 2.0.0)

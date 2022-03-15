@@ -14,6 +14,7 @@ ActiveAdmin.register Channel do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+    filter :name
   index do
     selectable_column
     id_column

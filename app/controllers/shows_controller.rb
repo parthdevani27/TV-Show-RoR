@@ -2,6 +2,17 @@ class ShowsController < ApplicationController
   before_action :login_user_id
   def index
       @shows = Show.all.order('created_at DESC').paginate(:page => params[:page], :per_page => 3)
+      bs = CreateClusterJob.new.perform('sidekiq-batch')
+      # # bs = Sidekiq::Batch.new
+      # puts bs
+#       bds = Sidekiq::DeadSet.new
+#       p "-----"
+# bds.each do |status|
+#   p status
+#   status.dead_jids 
+#   status.delete 
+# end
+
       @favourites = Favourite.where(user_id:  @user.id)
   end
 

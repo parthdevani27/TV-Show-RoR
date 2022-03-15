@@ -31,6 +31,7 @@ gem 'sidekiq'
 gem 'sidekiq-cron', git: "https://github.com/citusdata/sidekiq-cron", branch: "hotfix/pipelining_depreciation"
 gem 'will_paginate'
 gem 'acts_as_favoritor'
+gem 'sidekiq-batch'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
