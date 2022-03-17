@@ -32,6 +32,7 @@ gem 'sidekiq-cron', git: "https://github.com/citusdata/sidekiq-cron", branch: "h
 gem 'will_paginate'
 gem 'acts_as_favoritor'
 gem 'sidekiq-batch'
+gem 'activeadmin_addons'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
